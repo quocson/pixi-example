@@ -1,0 +1,40 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "sourceMap": true,
+        "module": "amd",
+        "moduleResolution": "node",
+        "isolatedModules": false,
+        "jsx": "react",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "declaration": false,
+        "noImplicitAny": false,
+        "removeComments": true,
+        "noLib": false,
+        "preserveConstEnums": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "outFile": "script.js"
+    },
+    "filesGlob": [
+        "typings/*.d.ts",
+        "script/Common/*.ts",
+        "script/*.ts",
+        "script/Service/*.ts",
+        "script/Component/*.ts",
+        "script/Component/**/*.ts",
+        "script/Input/*.ts",
+        "script/UI/*.ts"
+    ],
+    "files": [
+        "typings/howler.d.ts",
+        "typings/jquery.d.ts",
+        "typings/lib.d.ts",
+        "typings/pixi.js.d.ts",
+        "typings/signalr.d.ts",
+        "script/Common/Constants.ts",
+        "script/Common/POTO.ts",
+        "script/Common/Utils.ts",
+        "script/Game.ts"
+    ]
+}
