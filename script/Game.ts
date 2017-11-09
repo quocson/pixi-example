@@ -74,7 +74,7 @@ namespace Game {
     }
     let init = function () {
         new Game();
-        PIXI.loader.add("picker", "datepicker.png");
+        PIXI.loader.add("picker", "asset/img/datepicker.png");
     }
     window['WebFontConfig'] = {
         active: () => {
