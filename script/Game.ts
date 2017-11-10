@@ -33,8 +33,7 @@ namespace Game {
             }, this).load();
 
             this.onUpdateWindowSize();
-            PIXI.loader.onComplete.add(() => {   
-                console.log("complete!! == "+this.stage)    
+            PIXI.loader.onComplete.add(() => {     
                 this.mainGame = new MainBoard();
                 this.stage.addChild(this.mainGame)    
             });
@@ -74,15 +73,13 @@ namespace Game {
                 this.stage.y = (height - HEIGHT * ratio) / 2;
             }
             this.stage.scale.set(ratio, ratio);
-        }
+        } 
     }
     let init = function () {
         new Game();
         PIXI.loader.add("picker", "asset/img/datepicker.png")
         .add("carsJSON", "asset/img/cars2x.json")
         .add("roadback", "asset/img/roadback.jpg")
-       // .add("cars", "asset/img/cars2x.png")
-        console.log("game == ")
     }
     window['WebFontConfig'] = {
         active: () => {
@@ -100,7 +97,6 @@ namespace Game {
     };
     export let _trace = getQueries().debug ?
         function (...params: any[]) {
-            console.log.apply(console, params);
         } : function (...params: any[]) { };
     export let LadderGame: Game;
 }
