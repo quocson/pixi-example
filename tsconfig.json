@@ -35,6 +35,7 @@
         "script/Common/Constants.ts",
         "script/Common/POTO.ts",
         "script/Common/Utils.ts",
+        "script/AnimationGame.ts",
         "script/Game.ts"
     ]
 }
