@@ -7,7 +7,7 @@ namespace Game {
 
         private loading: PIXI.Sprite;
         private loadingTexture: PIXI.BaseTexture;
-
+        
         constructor() {
             super({
                 view: document.getElementById("game-canvas") as HTMLCanvasElement,
@@ -33,6 +33,38 @@ namespace Game {
             this.onUpdateWindowSize();
             PIXI.loader.onComplete.add(() => {               
                 // Resource loading complete
+                this.stage.removeChild(this.loading);
+
+                //Added by Mina
+                let texture = PIXI.Texture.fromImage('roadback');
+                let tilingSprite = new PIXI.extras.TilingSprite(texture, 2500, 478);
+                this.stage.addChild(tilingSprite);
+
+                this.ticker.add(function() {
+                    tilingSprite.x = -500;
+                    tilingSprite.y = 0;
+
+                    // tilingSprite.tilePosition.x += 5;
+                });
+
+                let cars = [];
+
+                for (let i = 1; i < 11; i++) {
+                    cars[i] = PIXI.Sprite.fromFrame("cars_" + i + ".png");
+                    this.stage.addChild(cars[i]);
+                    
+                    let randNum = (Math.floor(Math.random() * (70) + 1));
+
+                    cars[i].x = 1600 + randNum;
+                    
+                    if (i == 1) {
+                        cars[1].y = 20;
+                    } else {
+                        cars[i].y = cars[i - 1].y + cars[i].height - 12;
+                    }
+                    
+                    cars[i].scale.set(0.6, 0.6);
+                }
             });
 
             window.onresize = () => {
@@ -74,7 +106,9 @@ namespace Game {
     }
     let init = function () {
         new Game();
-        PIXI.loader.add("picker", "datepicker.png");
+        PIXI.loader.add("picker", "asset/img/datepicker.png")
+            .add("cars", "asset/img/cars2x.json")
+            .add("roadback", "asset/img/roadback.jpg");
     }
     window['WebFontConfig'] = {
         active: () => {
