@@ -21,8 +21,7 @@
         "script/Common/*.ts",
         "script/*.ts",
         "script/Service/*.ts",
-        "script/Component/*.ts",
-        "script/Component/**/*.ts",
+        "script/Components/*.ts",
         "script/Input/*.ts",
         "script/UI/*.ts"
     ],
@@ -35,6 +34,7 @@
         "script/Common/Constants.ts",
         "script/Common/POTO.ts",
         "script/Common/Utils.ts",
-        "script/Game.ts"
+        "script/Game.ts",
+        "script/Components/MainBoard.ts"
     ]
 }

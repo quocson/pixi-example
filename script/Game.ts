@@ -7,7 +7,8 @@ namespace Game {
 
         private loading: PIXI.Sprite;
         private loadingTexture: PIXI.BaseTexture;
-
+        private mainGame: MainBoard;
+        
         constructor() {
             super({
                 view: document.getElementById("game-canvas") as HTMLCanvasElement,
@@ -17,6 +18,7 @@ namespace Game {
                 backgroundColor: 0x191919,
                 forceCanvas: true
             });
+           
             LadderGame = this;
             let bootLoader = new PIXI.loaders.Loader();            
             bootLoader.add("logo", "asset/img/loading.jpg").once("complete", (loader) => {
@@ -31,8 +33,10 @@ namespace Game {
             }, this).load();
 
             this.onUpdateWindowSize();
-            PIXI.loader.onComplete.add(() => {               
-                // Resource loading complete
+            PIXI.loader.onComplete.add(() => {   
+                console.log("complete!! == "+this.stage)    
+                this.mainGame = new MainBoard();
+                this.stage.addChild(this.mainGame)    
             });
 
             window.onresize = () => {
@@ -74,7 +78,10 @@ namespace Game {
     }
     let init = function () {
         new Game();
-        PIXI.loader.add("picker", "datepicker.png");
+        PIXI.loader.add("picker", "asset/img/datepicker.png")
+        .add("carsJSON", "asset/img/cars2x.json")
+       // .add("cars", "asset/img/cars2x.png")
+        console.log("game == ")
     }
     window['WebFontConfig'] = {
         active: () => {
