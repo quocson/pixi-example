@@ -80,7 +80,9 @@ namespace Game {
         new Game();
         PIXI.loader.add("picker", "asset/img/datepicker.png")
         .add("carsJSON", "asset/img/cars2x.json")
-       // .add("cars", "asset/img/cars2x.png")
+        
+        // Should load all resources at first 
+        // .add("carsJSON", "asset/img/roadback.jpg")        
         console.log("game == ")
     }
     window['WebFontConfig'] = {

@@ -3,6 +3,8 @@ namespace Game {
     export class MainBoard extends PIXI.Container {
         private roadBG: PIXI.Sprite;
         private roadBGTexture: PIXI.Texture;
+        // Should use an Array of Sprite for easier control
+        // private cars: Array<PIXI.Sprite>;
         private car1: PIXI.Sprite;
         private car2: PIXI.Sprite;
         private car3: PIXI.Sprite;
@@ -17,12 +19,7 @@ namespace Game {
 
         constructor() {
             super();
-            
-            //PIXI.loader.add("carsJSON", "asset/img/cars2x.json")
-            //.add("cars", "asset/img/cars2x.png")
-            //.load(function () {
-                this.initialize();
-            //});
+            this.initialize();
             console.log("mainboard")
             
         }
@@ -30,17 +27,14 @@ namespace Game {
 
         private initialize() {
            
+            // Should Load the img in Loader like car2x.png and use fromFrame
+            // this.roadBGTexture = PIXI.Texture.fromFrame("roadback");
+
             this.roadBGTexture = PIXI.Texture.fromImage("asset/img/roadback.jpg");
             //this.roadBGTexture.
 
 
             /*
-            
-            
-            
-            
-            
-            
             for(let i = 1; i <= 10; i++){
 
                 this["car"+i].x = 980
@@ -51,6 +45,18 @@ namespace Game {
                 }
 
             }*/
+
+            
+            /*
+            Should use a loop to control Cars position
+
+            this.cars = [];
+            for(let i = 1; i <= 10; i++){
+                this.cars.push(PIXI.Sprite.fromFrame("cars_"+i+".png")); 
+            }
+
+            */
+
             this.car1 = PIXI.Sprite.fromFrame("cars_1.png"); 
             this.car2 = PIXI.Sprite.fromFrame("cars_2.png"); 
             this.car3 = PIXI.Sprite.fromFrame("cars_3.png"); 
@@ -66,7 +72,7 @@ namespace Game {
                 this.roadBGTexture, 1200, 600);
                 tilingSprite.y = 300
                 tilingSprite.tileScale.y = 1.26
-                this.addChild(tilingSprite,this.car1
+            this.addChild(tilingSprite,this.car1
                                 ,this.car2,this.car3
                                 ,this.car4,this.car5
                                 ,this.car6,this.car7
@@ -97,6 +103,8 @@ namespace Game {
         private moveCar(carNum){
             let plusOrMinus = Math.random() < 0.5 ? -1 : 1;
             let carMove = (plusOrMinus * Math.floor((Math.random() * 70) + -20))
+            // Try not to use [] for object property. This can be prevents by using an Array
+
             if(this["car"+carNum].x + carMove >= 980)
                 this["car"+carNum].x = 980
             else if(this["car"+carNum].x - carMove <= -20)
