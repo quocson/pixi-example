@@ -35,6 +35,7 @@
         "script/Common/POTO.ts",
         "script/Common/Utils.ts",
         "script/Game.ts",
+        "script/Components/Cars.ts",
         "script/Components/MainBoard.ts"
     ]
 }

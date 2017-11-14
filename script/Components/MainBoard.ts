@@ -3,14 +3,13 @@ namespace Game {
     export class MainBoard extends PIXI.Container {
         private roadBG: PIXI.Sprite;
         private roadBGTexture: PIXI.Texture;
-        private carsArr: Array<PIXI.Sprite> = [];
-        private carsEffectArr: Array<PIXI.Container> = [];
-        private carsSpeedArr: Array<number> = [];
+        private carsArr: Array<Cars> = [];
         private intvl: number;
         private countMove:number = 0;
         private blacker:PIXI.Graphics;
         private blacker2:PIXI.Graphics;
         private carsCountFinish:number = -1;
+        //private carsClass:Cars;
         constructor() {
             super();
             this.initialize();     
@@ -37,27 +36,18 @@ namespace Game {
                 tilingSprite.tileScale.y = 1.26
                 this.addChild(tilingSprite);
                 for(let i = 0; i < 10; i++){
-                    let cars: PIXI.Sprite = PIXI.Sprite.fromFrame("cars_"+(i+1)+".png"); 
-                    let carsWind: PIXI.Sprite = PIXI.Sprite.fromFrame("cars_wind.png"); 
-                    let carsFire: PIXI.Sprite = PIXI.Sprite.fromFrame("cars_fire.png"); 
-                    let carsContainer: PIXI.Container = new PIXI.Container();
-                    carsFire.x = cars.width - 15;
-                    carsFire.y = cars.height / 2;
-                    carsWind.y = 0 - (cars.height / 2);
-                    carsContainer.addChild(carsWind, carsFire);
-                    carsContainer.visible = false;
+                    let cars:Cars = new Cars();
+                    cars.initialize(i);
                     
                     cars.x = 980
                     if(i == 0)
                     cars.y = 300
                     else{
-                        cars.y = this.carsArr[i - 1].y + cars.height
+                        cars.y = this.carsArr[i - 1].y + cars.carHeight
                     }
-                    carsContainer.y = cars.y
+                    this.addChild(cars);
                     this.carsArr.push(cars);
-                    this.carsEffectArr.push(carsContainer);
-                    this.carsSpeedArr.push(-1)
-                    this.addChild(cars,carsContainer);
+                    
 
                 }
             this.addChild(this.blacker,this.blacker2);
@@ -70,44 +60,35 @@ namespace Game {
         }
 
         private moveCar(carNum){
-           let plusOrMinus = Math.random() < 0.5 ? -1 : 1;
-           let carMove = (plusOrMinus * Math.floor((Math.random() * 0) + 1))
+          
            let carCount:number = 0;
-           if(this.countMove == 50){
-                this.carsSpeedArr[carNum] = (plusOrMinus * Math.floor((Math.random() * 5) + 1))
-              }
-            if(this.countMove == 90){
-                this.carsSpeedArr[carNum] = (plusOrMinus * Math.floor((Math.random() * 1) + 1))
-            }
+           this.carsArr[carNum].update(this.countMove);
              if(carNum == Math.floor((Math.random() * 9) + 1))  { 
                 if(this.countMove == 90)
                     this.countMove = 0;
                 this.countMove++;
              }
-             if(this.countMove == 480){
+             if(this.countMove == 485){
                 clearInterval(this.intvl)
                 console.log("win == car"+this.carsCountFinish)
+                
                // this.carsArr[this.carsCountFinish].x =  600 - this.carsArr[this.carsCountFinish].width;
                 //this.carsArr[this.carsCountFinish].y =  500 //+ this.carsArr[this.carsCountFinish].height;
             }
-            if(this.carsArr[carNum].x + this.carsSpeedArr[carNum] >= 1200 )
-            this.carsArr[carNum].x =  1200;
+            if(this.carsArr[carNum].x + this.carsArr[carNum].carSpeed >= 1200 )
+                this.carsArr[carNum].x =  1200;
             else 
-            if(this.carsArr[carNum].x - this.carsSpeedArr[carNum] <= 0 && this.carsCountFinish == -1){
+            if(this.carsArr[carNum].x - this.carsArr[carNum].carSpeed <= 0 && this.carsCountFinish == -1){
                 this.countMove = 91;
                 for(let carsCount = 0;carsCount < 10; carsCount++)
-                this.carsSpeedArr[carsCount] = (-4)
+                this.carsArr[carsCount].carSpeed = (-4)
                 this.carsCountFinish = carNum + 1;
             }
             else {   
-            this.carsArr[carNum].x = this.carsArr[carNum].x + this.carsSpeedArr[carNum];
-            this.carsEffectArr[carNum].x = this.carsArr[carNum].x;
-                if(this.carsSpeedArr[carNum] < -3)
-                    this.carsEffectArr[carNum].visible = true;
-                else
-                    this.carsEffectArr[carNum].visible = false;
-            }
+            this.carsArr[carNum].x = this.carsArr[carNum].x + this.carsArr[carNum].carSpeed;
+            
         }
         
     }
+}
 }
