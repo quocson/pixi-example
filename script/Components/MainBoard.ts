@@ -6,9 +6,9 @@ namespace Game {
         private carsArr: Array<Cars> = [];
         private intvl: number;
         private countMove:number = 0;
-        private blacker:PIXI.Graphics;
-        private blacker2:PIXI.Graphics;
+        private masker:PIXI.Graphics;
         private carsCountFinish:number = -1;
+        private tilingSprite: PIXI.extras.TilingSprite;
         //private carsClass:Cars;
         constructor() {
             super();
@@ -17,24 +17,19 @@ namespace Game {
 
         private initialize() {
            
-            this.blacker = new PIXI.Graphics();
-            this.blacker.beginFill(0x191919)
-            this.blacker.drawRect(0,0,500,600);
-            this.blacker.x = 1200
-            this.blacker.y = 300
+            this.masker = new PIXI.Graphics();
+            this.masker.beginFill(0x191919)
+            this.masker.drawRect(0,0,1200,600);
+            this.masker.x = 0
+            this.masker.y = 300
 
-            this.blacker2 = new PIXI.Graphics();
-            this.blacker2.beginFill(0x191919)
-            this.blacker2.drawRect(0,0,500,650);
-            this.blacker2.x = -501
-            this.blacker2.y = 280
 
             this.roadBGTexture = PIXI.Texture.fromFrame("roadback");
-            var tilingSprite = new PIXI.extras.TilingSprite(
+            this.tilingSprite = new PIXI.extras.TilingSprite(
                 this.roadBGTexture, 1200, 600);
-                tilingSprite.y = 300
-                tilingSprite.tileScale.y = 1.26
-                this.addChild(tilingSprite);
+                this.tilingSprite.y = 300
+                this.tilingSprite.tileScale.y = 1.26
+                this.addChild(this.tilingSprite);
                 for(let i = 0; i < 10; i++){
                     let cars:Cars = new Cars();
                     cars.initialize(i);
@@ -50,13 +45,22 @@ namespace Game {
                     
 
                 }
-            this.addChild(this.blacker,this.blacker2);
+            this.addChild(this.masker);
+            this.mask = this.masker;
+
             this.intvl = setInterval(() => {
-                   tilingSprite.tilePosition.x += 20;
-                   for(let carCount = 0; carCount < 10; carCount++)
-                   this.moveCar(carCount)
-                   
-                }, 10);
+                this.update();
+                
+             }, 10);
+           
+        }
+
+        public update(){
+            
+            this.tilingSprite.tilePosition.x += 20;
+            for(let carCount = 0; carCount < 10; carCount++)
+            this.moveCar(carCount)
+
         }
 
         private moveCar(carNum){

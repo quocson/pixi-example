@@ -35,12 +35,16 @@ namespace Game {
             this.onUpdateWindowSize();
             PIXI.loader.onComplete.add(() => {     
                 this.mainGame = new MainBoard();
-                this.stage.addChild(this.mainGame)    
+                this.stage.addChild(this.mainGame) 
+                this.ticker.add(this.update);   
+                
             });
 
             window.onresize = () => {
                 this.onUpdateWindowSize();
             }
+            //this.ticker.speed = 10;
+            
         }
 
         private getTextureByProgress() {
@@ -51,6 +55,10 @@ namespace Game {
         }
         private inProgress() {
             this.loading.texture = this.getTextureByProgress();
+        }
+
+        private update(elapsed:number) {
+           
         }
 
         private onUpdateWindowSize() {
