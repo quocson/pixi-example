@@ -5,102 +5,72 @@ namespace Game {
         private roadback;
         private roadAnim;
         private carsAnim;
-        private carTimer:number = 0;
-        private carSpeed:number = 2;
-        private randNum = 3;
-        private carFinish:number = 0;
 
-        private cars = [];
-        private carSmoke = [];
-        private carWind = [];
-        private carsSpeed = [];
+        private carTimer: number = 0;
+        private carFinish: number = 0;
+        private tilingSprite: PIXI.extras.TilingSprite;
+
+        private carsArray = [];
 
         constructor() {
             super();
-            this.initElements();        
+            this.initElements();
         }
 
         private initElements() {
             this.roadback = PIXI.Texture.fromImage('roadback');
-            let tilingSprite = new PIXI.extras.TilingSprite(this.roadback, 2500, 478);
-            this.addChild(tilingSprite);
+            this.tilingSprite = new PIXI.extras.TilingSprite(this.roadback, 2500, 478);
+            this.addChild(this.tilingSprite);
 
-            tilingSprite.x = -500;
-            tilingSprite.y = 0;
+            this.tilingSprite.x = -500;
+            this.tilingSprite.y = 0; 
 
-            this.roadAnim = setInterval(() => {
-                tilingSprite.tilePosition.x += 5;
-            }, 10);
+            for (let i = 0; i < 10; i++) {
+                let newCar: Car = new Car();
+                newCar.initCars(i);
 
-            for (let i = 1; i < 11; i++) {
-                this.cars[i] = PIXI.Sprite.fromFrame("cars_" + i + ".png");
-                this.carSmoke[i] = PIXI.Sprite.fromFrame("cars_fire.png");
-                this.carWind[i] = PIXI.Sprite.fromFrame("cars_wind.png");
-                this.addChild(this.cars[i], this.carSmoke[i], this.carWind[i]);
-                this.carsSpeed.push(1);
-
-                if (i == 1) {
-                    this.cars[1].y = 15;
+                if (i == 0) {
+                    newCar.y = 15;
                 } else {
-                    this.cars[i].y = this.cars[i - 1].y + this.cars[i].height - 11;
+                    newCar.y = this.carsArray[i - 1].y + newCar.height - 11;
                 }
-                
-                this.cars[i].x = 1600;
-                this.cars[i].scale.set(0.6, 0.6);
 
-                this.carSmoke[i].x = 1588 + this.cars[i].width;
-                this.carSmoke[i].y = this.cars[i].y + this.cars[i].height / 3;
-                this.carSmoke[i].visible = false;
+                newCar.x = 1600;
+                newCar.scale.set(0.6, 0.6);
 
-                this.carWind[i].x = 1588 + this.cars[i].x;
-                this.carWind[i].y = this.cars[i].y + this.cars[i].height / 2 - 40;
-                this.carWind[i].visible = false;
+                this.addChild(newCar);
+                this.carsArray.push(newCar);
             }
             this.animCars();
         }
 
-        private animCars(){
-            this.carsAnim = setInterval(() => {                
-                for (let j = 1; j < 11; j++) {
+        public animCars() {
+            for (let j = 0; j < 10; j++) {
+                this.carsArray[j].update(this.carTimer);
 
-                    if (this.carTimer == 90) {
-                        if (this.carsSpeed[j - 1] != 0)
-                            this.carsSpeed[j - 1] = Math.floor(Math.random() * (5) + 1);
+                this.carsArray[j].x -= this.carsArray[j].carsSpeed;
 
-                        if (this.carsSpeed[j - 1] >= 4) {
-                            this.carSmoke[j].visible = true;
-                            this.carWind[j].visible = true;
-                        }
-                    }
-    
-                    if (this.carTimer == 150) {
-                        if(this.carsSpeed[j - 1] != 0)
-                            this.carsSpeed[j - 1] = 2;
+                if (this.carsArray[j].x <= -600) {
+                    this.carsArray[j].carsSpeed = 0;
+                    this.carsArray[j].x = 1600;
+                    this.carFinish++;
 
-                        this.carSmoke[j].visible = false;
-                        this.carWind[j].visible = false;
-                    }
-
-                   this.cars[j].x -= this.carsSpeed[j-1];
-                   this.carSmoke[j].x = this.cars[j].x - 15 + this.cars[j].width;
-                   this.carWind[j].x = this.cars[j].x - 15;
-
-                    if (this.cars[j].x < -600) {
-                        this.carsSpeed[j - 1] = 0;
-                        this.cars[j].x = 1600
-                        this.carFinish++;
-
-                        if(this.carFinish == 10){
-                            clearInterval(this.roadAnim);
-                            clearInterval(this.carsAnim);
-                        }
+                    if (this.carFinish == 10) {   
+                        this.carTimer = undefined;                
+                        this.carsArray[j].carSmoke.visible = this.carsArray[j].carWind.visible = false;
                     }
                 }
-                if (this.carTimer == 150) 
-                     this.carTimer = 0;
+            }
 
-                this.carTimer++;
-            }, 10);
+            if (this.carTimer == undefined)
+                return;
+
+            this.tilingSprite.tilePosition.x += 15;
+
+            if (this.carTimer == 150)
+                this.carTimer = 0;
+
+            this.carTimer++;
         }
     }
 }

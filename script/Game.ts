@@ -37,13 +37,19 @@ namespace Game {
             PIXI.loader.onComplete.add(() => {               
                 // Resource loading complete
                 this.stage.removeChild(this.loading);
+
                 this.mainGame = new AnimationGame();
                 this.stage.addChild(this.mainGame);
+                this.ticker.add(this.update, this);
             });
 
             window.onresize = () => {
                 this.onUpdateWindowSize();
             }
+        }
+
+        private update(elapsed:number) {
+            this.mainGame.animCars();
         }
 
         private getTextureByProgress() {

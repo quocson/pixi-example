@@ -1,0 +1,45 @@
+namespace Game {
+    
+        export class Car extends PIXI.Container {
+    
+            private cars;
+            private carSmoke;
+            private carWind;
+            private carsSpeed:number = 1;
+    
+            constructor() {
+                super();
+            }
+    
+            public initCars(addCar:number) {
+                this.cars = PIXI.Sprite.fromFrame("cars_" + (addCar + 1) + ".png");
+                this.carSmoke = PIXI.Sprite.fromFrame("cars_fire.png");
+                this.carWind = PIXI.Sprite.fromFrame("cars_wind.png");
+
+                this.carSmoke.x = this.cars.width;
+                this.carSmoke.y = this.cars.height / 3;
+                this.carWind.y = this.cars.height - 70;
+
+                this.carSmoke.visible = this.carWind.visible = false;
+
+                this.addChild(this.cars, this.carSmoke, this.carWind);
+            }
+    
+            public update(elapsedTime:number){                        
+                if (elapsedTime == 90) {
+                    if (this.carsSpeed != 0)
+                        this.carsSpeed = Math.floor(Math.random() * (5) + 1);
+                }
+
+                if (elapsedTime == 150) {
+                    if (this.carsSpeed != 0)
+                        this.carsSpeed = 2;
+                }
+
+                if (this.carsSpeed >= 3)
+                    this.carSmoke.visible = this.carWind.visible = true;
+                else
+                    this.carSmoke.visible = this.carWind.visible = false;
+            }
+        }
+    }

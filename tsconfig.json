@@ -36,6 +36,7 @@
         "script/Common/POTO.ts",
         "script/Common/Utils.ts",
         "script/AnimationGame.ts",
+        "script/Car.ts",
         "script/Game.ts"
     ]
 }
