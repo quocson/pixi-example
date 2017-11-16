@@ -2,10 +2,7 @@ namespace Game {
 
     export class Cars extends PIXI.Container {
 
-        private carsSpeedArr: Array<number> = [];
-        private intvl: number;
-        private countMove: number = 0;
-        private carsCountFinish: number = -1;
+
         public carHeight: number;
         public carSpeed: number = -1;
         private cars: PIXI.Sprite;
@@ -13,7 +10,6 @@ namespace Game {
         private carsFire: PIXI.Sprite;
         constructor() {
             super();
-
         }
 
         public initialize(currCar: number) {

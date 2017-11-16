@@ -1,10 +1,8 @@
 namespace Game {
 
     export class MainBoard extends PIXI.Container {
-        private roadBG: PIXI.Sprite;
         private roadBGTexture: PIXI.Texture;
         private carsArr: Array<Cars> = [];
-        private intvl: number;
         private countMove: number = 0;
         private masker: PIXI.Graphics;
         private carsCountFinish: number = -1;
@@ -47,18 +45,17 @@ namespace Game {
 
         public update() {
 
-            if(this.countMove < 485){  
-            for (let carCount = 0; carCount < 10; carCount++)
-                this.moveCar(carCount)
-            this.tilingSprite.tilePosition.x += 20;
-            
-             }
-             if(this.countMove >= 485){
-                console.log("CAR "+this.carsCountFinish+" WON");
+            if (this.countMove < 485) {
+                for (let carCount = 0; carCount < 10; carCount++)
+                    this.moveCar(carCount)
+                this.tilingSprite.tilePosition.x += 20;
+
+            }
+            if (this.countMove >= 485) {
+                console.log("CAR " + this.carsCountFinish + " WON");
                 this.countMove = undefined;
-             }
-             
-                
+            }
+
         }
 
         private moveCar(carNum) {

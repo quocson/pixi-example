@@ -8,7 +8,6 @@ namespace Game {
         private loading: PIXI.Sprite;
         private loadingTexture: PIXI.BaseTexture;
         private mainGame: MainBoard;
-        public gameEnd:boolean = false;
 
         constructor() {
             super({

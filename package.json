@@ -24,5 +24,8 @@
     "st": "^1.2.2",
     "tsconfig-glob": "^0.4.3",
     "typescript": "^2.4.2"
+  },
+  "dependencies": {
+    "eventemitter3": "^2.0.3"
   }
 }
