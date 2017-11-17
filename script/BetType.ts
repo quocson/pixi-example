@@ -52,5 +52,9 @@ namespace Game {
                         this.addChild(this.topThreeText, this.bigSmallText, this.oddEvenText);
                         this.addChild(this.dt_1_10, this.dt_2_9, this.dt_3_8, this.dt_4_7, this.dt_5_6);
                 }
+
+                private topThreeSum() {
+                        //
+                }
         }
 }
