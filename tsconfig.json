@@ -36,6 +36,7 @@
         "script/Common/Utils.ts",
         "script/Game.ts",
         "script/Components/Cars.ts",
-        "script/Components/MainBoard.ts"
+        "script/Components/MainBoard.ts",
+        "script/Components/Standings.ts"
     ]
 }
