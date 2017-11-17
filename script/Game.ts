@@ -9,6 +9,7 @@ namespace Game {
         private loading: PIXI.Sprite;
         private loadingTexture: PIXI.BaseTexture;
         private mainGame: AnimationGame;
+        private betType: BetType;
         
         constructor() {
             super({
@@ -41,6 +42,9 @@ namespace Game {
                 this.mainGame = new AnimationGame();
                 this.stage.addChild(this.mainGame);
                 this.ticker.add(this.update, this);
+
+                this.betType = new BetType();
+                this.stage.addChild(this.betType);
             });
 
             window.onresize = () => {

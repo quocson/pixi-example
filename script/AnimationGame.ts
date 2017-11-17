@@ -46,6 +46,7 @@ namespace Game {
 
         public animCars() {
             for (let j = 0; j < 10; j++) {
+                this.carsArray[j].id = j + 1;
                 this.carsArray[j].update(this.carTimer);
 
                 this.carsArray[j].x -= this.carsArray[j].carsSpeed;
@@ -53,12 +54,14 @@ namespace Game {
                 if (this.carsArray[j].x <= -600) {
                     this.carsArray[j].carsSpeed = 0;
                     this.carsArray[j].x = 1600;
+
                     this.carFinish++;
 
                     if (this.carFinish == 10) {   
                         this.carTimer = undefined;                
                         this.carsArray[j].carSmoke.visible = this.carsArray[j].carWind.visible = false;
                     }
+                    console.log(this.carsArray[j].id);
                 }
             }
 
