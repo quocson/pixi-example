@@ -54,7 +54,7 @@ namespace Game {
 
 
             for (let j = 0; j < 10; j++) {
-                this.carsArray[j].id = j + 1;
+                this.carsArray[j].id = j;
                 this.carsArray[j].update(this.carTimer);
 
                 this.carsArray[j].x -= this.carsArray[j].carsSpeed;
@@ -68,6 +68,49 @@ namespace Game {
                     if (this.carFinish == 10) {
                         this.carTimer = undefined;
                         this.carsArray[j].carSmoke.visible = this.carsArray[j].carWind.visible = false;
+                                                
+                        //Dragon or Tiger
+                        // console.log('New array = ' + this.newArray);
+                        
+                        if (this.newArray[0] > this.newArray[9]) {
+                            console.log(this.newArray[0] + ' ? ' + this.newArray[9]);
+                            this.betType.result_1_10 = 'Dragon';
+                        } else {
+                            console.log(this.newArray[0] + ' ? ' + this.newArray[9]);
+                            this.betType.result_1_10 = 'Tiger';
+                        }
+                        
+                        if (this.newArray[1] > this.newArray[8]) {
+                            console.log(this.newArray[1] + ' ? ' + this.newArray[8]);
+                            this.betType.result_2_9 = 'Dragon';
+                        } else {
+                            console.log(this.newArray[1] + ' ? ' + this.newArray[8]);
+                            this.betType.result_2_9 = 'Tiger';
+                        }
+                        
+                        if (this.newArray[2] > this.newArray[7]){
+                            console.log(this.newArray[2] + ' ? ' + this.newArray[7]);
+                            this.betType.result_3_8 = 'Dragon';
+                        } else {
+                            console.log(this.newArray[2] + ' ? ' + this.newArray[7]);
+                            this.betType.result_3_8 = 'Tiger';
+                        }
+                        
+                        if (this.newArray[3] > this.newArray[6]) {
+                            console.log(this.newArray[3] + ' ? ' + this.newArray[6]);                            
+                            this.betType.result_4_7 = 'Dragon';
+                        } else {
+                            console.log(this.newArray[3] + ' ? ' + this.newArray[6]); 
+                            this.betType.result_4_7 = 'Tiger';
+                        }
+
+                        if (this.newArray[4] > this.newArray[5]){
+                            console.log(this.newArray[4] + ' ? ' + this.newArray[5]);
+                            this.betType.result_5_6 = 'Dragon';
+                        } else {
+                            console.log(this.newArray[4] + ' ? ' + this.newArray[5]);
+                            this.betType.result_5_6 = 'Tiger';
+                        }
 
                         //Added
                         this.betType.threeArray = this.newArray.splice(0, 3);
@@ -76,10 +119,10 @@ namespace Game {
                         }, 0);
 
                         //Top Three
-                        console.log(this.betType.threeArray);
+                        console.log('Top Three = ' + this.betType.threeArray);
 
                         //Sum
-                        console.log(this.betType.threeArray.reduce(function (a, b) {
+                        console.log('Sum is = ' + this.betType.threeArray.reduce(function (a, b) {
                             return a + b;
                         }, 0));
 
@@ -98,6 +141,7 @@ namespace Game {
                         this.betType.showStatus();
                     }
                     this.newArray.push(this.carsArray[j].id);
+                    console.log(this.newArray);
                 }
             }
 
