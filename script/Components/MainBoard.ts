@@ -3,20 +3,25 @@ namespace Game {
     export class MainBoard extends PIXI.Container {
         private roadBGTexture: PIXI.Texture;
         private carsArr: Array<Cars> = [];
-        private carsArrResult: Array<number> = [7, 2, 3, 4, 10, 6, 1, 8, 9, 5];
+        private carsArrResult: Array<number> = [3, 2, 7, 4, 10, 6, 1, 8, 9, 5];
         private carsCurrDistance: Array<number> = [];
         private countMove: number = 0;
         private masker: PIXI.Graphics;
         private standings: Standings;
         private carsCountFinish: number = 0;
+        private carsCountStopped: number = 0;
+        private allCarsPositioned: boolean = false;
         private tilingSprite: PIXI.extras.TilingSprite;
+        private animationDone: boolean = false;
         constructor() {
             super();
             this.initialize();
+
         }
 
         private initialize() {
-
+            this.carsArrResult.sort(function (a, b) { return 0.5 - Math.random() });//randomize the cars' winning order
+            console.log(this.carsArrResult)
             this.masker = new PIXI.Graphics();
             this.masker.beginFill(0x191919)
             this.masker.drawRect(0, 0, 1200, 900);
@@ -31,7 +36,7 @@ namespace Game {
             this.addChild(this.tilingSprite);
             for (let i = 0; i < 10; i++) {
                 let cars: Cars = new Cars();
-                cars.initialize(i);
+                cars.initialize(i, this.carsArrResult.indexOf(i + 1));
                 cars.x = 980
                 if (i == 0)
                     cars.y = 300
@@ -43,54 +48,48 @@ namespace Game {
                 this.carsCurrDistance.push(cars.x);
             }
             this.standings = new Standings();
+            this.standings.y = 150
             this.carsArr[this.carsArrResult[0] - 1].toWin = true;
             this.addChild(this.masker, this.standings);
             this.mask = this.masker;
         }
 
         public update() {
+            if (this.animationDone)//no need to proceed to since all cars already finished
+                return
+            this.carsCountStopped = 0;
+            this.carsCountFinish = 0;
 
             for (let carCount = 0; carCount <= 10; carCount++) {
-                if(carCount < 10)
-                this.moveCar(carCount);
+                if (carCount < 10) {
+                    this.moveCar(carCount);
+                    if (this.carsArr[carCount].x < -250 && this.carsCountFinish < 10) {
+                        this.carsCountFinish++;
+                        if (this.carsCountFinish == 10)//set this.animationDone to true if all cars crossed the line
+                            this.animationDone = true;
+                    }
+                    if (this.allCarsPositioned == false) {//keeps checking if all cars are in position
+                        if (this.carsCountStopped == 9) {
+                            this.allCarsPositioned = true;
+                        }
+                        if (this.carsArr[carCount].carSpeed == 0)
+                            this.carsCountStopped++;
+                    } else
+                        this.carsArr[carCount].toFinish = true;
+
+                }
                 else
-                this.standings.update(this.carsCurrDistance);
+                    this.standings.update(this.carsCurrDistance);//pass the array of cars' 'x-coordinate' to update the standings
             }
-                this.tilingSprite.tilePosition.x += 20;
-
-            
-
+            this.countMove++;
+            this.tilingSprite.tilePosition.x += 20;
         }
-
+        
         private moveCar(carNum) {
-            let carCount: number = 0;
             this.carsArr[carNum].update(this.countMove);
-            if (carNum == Math.floor((Math.random() * 9))) {
-                if (this.countMove == 90)
-                    this.countMove = 0;
-                this.countMove++;
-            }
-            if (this.carsArr[carNum].x + this.carsArr[carNum].carSpeed >= 1200)
-                this.carsArr[carNum].carSpeed = -1;
-            else
-                if (this.carsArr[carNum].x + this.carsArr[carNum].carSpeed <= 0 && this.carsCountFinish < 10) {
-                    this.carsCountFinish++;
-                    this.carsArr[carNum].x = 980;
-                    this.carsArr[carNum].currDistance = 10 - this.carsCountFinish;
-                    this.carsArr[carNum].isFinished = true;
-                    if (this.carsCountFinish < 10)
-                        this.carsArr[this.carsArrResult[this.carsCountFinish] - 1].toWin = true;
+            this.carsArr[carNum].x = this.carsArr[carNum].x + this.carsArr[carNum].carSpeed;
+            this.carsCurrDistance[carNum] = this.carsArr[carNum].x;//store the car's current 'x-coordinate' inside the array
 
-                }
-                else {
-                    this.carsArr[carNum].x = this.carsArr[carNum].x + this.carsArr[carNum].carSpeed;
-
-                }
-                if(this.carsArr[carNum].carSpeed == 0)
-                this.carsCurrDistance[carNum] = -1 * (this.carsArr[carNum].currDistance);
-                else
-                this.carsCurrDistance[carNum] = this.carsArr[carNum].x;
-            
         }
     }
 }
