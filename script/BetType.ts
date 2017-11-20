@@ -2,101 +2,70 @@ namespace Game {
 
         export class BetType extends PIXI.Container {
 
-                private topThreeText: PIXI.Text;
-                private bigSmallText: PIXI.Text;
-                private oddEvenText: PIXI.Text;
+                public topThreeText; bigSmallText; oddEvenText; dragonTigerText: PIXI.Text;
+                public result_1_10; result_2_9; result_3_8; result_4_7; result_5_6: string;
 
-                private dt_1_10: PIXI.Text;
-                private dt_2_9: PIXI.Text;
-                private dt_3_8: PIXI.Text;
-                private dt_4_7: PIXI.Text;
-                private dt_5_6: PIXI.Text;
-                
                 public threeArray: Array<number> = [];
                 public sumNum: number;
-                public bigSmall: string;
-                public oddEven: string;
+                public bigSmall; oddEven: string;
 
-                public result_1_10: string;
-                public result_2_9: string;
-                public result_3_8: string;
-                public result_4_7: string;
-                public result_5_6: string;
+                public result: Array<string> = ["6", "S", "E"];
+                public resultTexts: Array<PIXI.Text> = [];
+
+                public result_dt: Array<string> = ["T", "T", "T", "T", "T", "T"];
+                public resultTexts_dt: Array<PIXI.Text> = [];
+
+                public style = new PIXI.TextStyle({
+                        fontFamily: 'Roboto',
+                        fontSize: 35,
+                        fontStyle: 'normal',
+                        fontWeight: 'bold',
+                        fill: ['#ffffff'],
+                });
 
                 constructor() {
                         super();
 
-                        let style = new PIXI.TextStyle({
-                                fontFamily: 'Roboto',
-                                fontSize: 30,
-                                fontStyle: 'normal',
-                                fontWeight: 'bold',
-                                fill: ['#ffffff'],
-                        });
-
-                        this.topThreeText = new PIXI.Text("Top 3: ", style);
+                        this.topThreeText = new PIXI.Text("Top 3: ", this.style);
                         this.topThreeText.position.set(-420, 500);
 
-                        this.bigSmallText = new PIXI.Text("Big or Small: ", style);
-                        this.bigSmallText.position.set(-420, 540);
-                        
-                        this.oddEvenText = new PIXI.Text("Odd or Even: ", style);
-                        this.oddEvenText.position.set(-420, 580);
+                        this.dragonTigerText = new PIXI.Text("Dragon/Tiger: ", this.style);
+                        this.dragonTigerText.position.set(100, 500);
 
-                        this.dt_1_10 = new PIXI.Text("1st & 10th: ", style);
-                        this.dt_1_10.position.set(-420, 640);
-
-                        this.dt_2_9 = new PIXI.Text("2nd & 9th: ", style);
-                        this.dt_2_9.position.set(-420, 680);
-
-                        this.dt_3_8 = new PIXI.Text("3rd & 8th: ", style);
-                        this.dt_3_8.position.set(-420, 720);
-
-                        this.dt_4_7 = new PIXI.Text("4th & 7th: ", style);
-                        this.dt_4_7.position.set(-420, 760);
-
-                        this.dt_5_6 = new PIXI.Text("5th & 6th: ", style);
-                        this.dt_5_6.position.set(-420, 800);
-                        
-                        this.addChild(this.topThreeText, this.bigSmallText, this.oddEvenText);
-                        this.addChild(this.dt_1_10, this.dt_2_9, this.dt_3_8, this.dt_4_7, this.dt_5_6);
+                        this.addChild(this.topThreeText, this.dragonTigerText);
+                        this.showStatus();
                 }
 
                 public showStatus() {
-                        let style = new PIXI.TextStyle({
-                                fontFamily: 'Roboto',
-                                fontSize: 30,
-                                fontStyle: 'normal',
-                                fontWeight: 'bold',
-                                fill: ['#ffffff'],
-                        });
-                        this.topThreeText = new PIXI.Text("Top 3: " + this.sumNum, style);
-                        this.topThreeText.position.set(-420, 500);
+                        for (let i = 0; i < 3; i++) {
+                                let labelResult: PIXI.Text = new PIXI.Text(this.result[i], this.style);
+                                labelResult.x = labelResult.x = -260 + (80 * i);
+                                labelResult.y = 500;
 
-                        this.bigSmallText = new PIXI.Text("Big or Small: " + this.bigSmall, style);
-                        this.bigSmallText.position.set(-420, 540);
-                        
-                        this.oddEvenText = new PIXI.Text("Odd or Even: " + this.oddEven, style);
-                        this.oddEvenText.position.set(-420, 580);
+                                this.resultTexts.push(labelResult);
+                                this.addChild(labelResult);
+                        }
 
-                        //Dragon or Tiger
-                        this.dt_1_10 = new PIXI.Text("1st & 10th: " + this.result_1_10, style);
-                        this.dt_1_10.position.set(-420, 640);
+                        for (let i = 0; i < 5; i++) {
+                                let labelResult_dt: PIXI.Text = new PIXI.Text(this.result_dt[i], this.style);
+                                labelResult_dt.x = labelResult_dt.x = 370 + (80 * i);
+                                labelResult_dt.y = 500;
 
-                        this.dt_2_9 = new PIXI.Text("2nd & 9th: " + this.result_2_9, style);
-                        this.dt_2_9.position.set(-420, 680);
+                                this.resultTexts_dt.push(labelResult_dt);
+                                this.addChild(labelResult_dt);
+                        }
+                }
 
-                        this.dt_3_8 = new PIXI.Text("3rd & 8th: " + this.result_3_8, style);
-                        this.dt_3_8.position.set(-420, 720);
+                public updateValues() {
+                        for (let i = 0; i < 3; i++) {
+                                this.result = [this.sumNum.toString(), this.bigSmall, this.oddEven];
+                                this.resultTexts[i].text =  this.result[i];
+                        }
 
-                        this.dt_4_7 = new PIXI.Text("4th & 7th: " + this.result_4_7, style);
-                        this.dt_4_7.position.set(-420, 760);
-
-                        this.dt_5_6 = new PIXI.Text("5th & 6th: " + this.result_5_6, style);
-                        this.dt_5_6.position.set(-420, 800);
-
-                        this.addChild(this.topThreeText, this.bigSmallText, this.oddEvenText);
-                        this.addChild(this.dt_1_10, this.dt_2_9, this.dt_3_8, this.dt_4_7, this.dt_5_6);
+                        for (let j = 0; j < 5; j++) {
+                                this.result_dt = [this.result_1_10, this.result_2_9, this.result_3_8, this.result_4_7, this.result_5_6];
+                                this.resultTexts_dt[j].text = this.result_dt[j];
+                        }
                 }
         }
 }

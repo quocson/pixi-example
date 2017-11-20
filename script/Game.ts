@@ -9,7 +9,7 @@ namespace Game {
         private loading: PIXI.Sprite;
         private loadingTexture: PIXI.BaseTexture;
         private mainGame: AnimationGame;
-        
+
         constructor() {
             super({
                 view: document.getElementById("game-canvas") as HTMLCanvasElement,
@@ -20,7 +20,7 @@ namespace Game {
                 forceCanvas: true
             });
             LadderGame = this;
-            let bootLoader = new PIXI.loaders.Loader();            
+            let bootLoader = new PIXI.loaders.Loader();
             bootLoader.add("logo", "asset/img/loading.jpg").once("complete", (loader) => {
                 this.loadingTexture = loader.resources["logo"].texture.baseTexture;
                 this.loading = new PIXI.Sprite(this.getTextureByProgress());
@@ -29,12 +29,12 @@ namespace Game {
                 this.loading.scale.set(0.5);
                 PIXI.loader.on("progress", this.inProgress, this);
                 this.stage.addChild(this.loading);
-                PIXI.loader.load();                
+                PIXI.loader.load();
             }, this).load();
 
             this.onUpdateWindowSize();
 
-            PIXI.loader.onComplete.add(() => {               
+            PIXI.loader.onComplete.add(() => {
                 // Resource loading complete
                 this.stage.removeChild(this.loading);
 
@@ -48,7 +48,7 @@ namespace Game {
             }
         }
 
-        private update(elapsed:number) {
+        private update(elapsed: number) {
             this.mainGame.animCars();
         }
 
@@ -95,9 +95,9 @@ namespace Game {
             init();
             document.documentElement.focus();
         },
-        inactive: function() {          
+        inactive: function () {
             init();
-            document.documentElement.focus(); 
+            document.documentElement.focus();
         },
         custom: {
             families: ['Roboto'],

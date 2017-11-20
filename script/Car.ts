@@ -5,6 +5,8 @@ namespace Game {
         private cars;
         private carSmoke;
         private carWind;
+
+        private carsId: number;
         private carsSpeed: number = 1;
 
         constructor() {
@@ -13,6 +15,7 @@ namespace Game {
 
         public initCars(addCar: number) {
             this.cars = PIXI.Sprite.fromFrame("cars_" + (addCar + 1) + ".png");
+            this.carsId = addCar + 1;
             this.carSmoke = PIXI.Sprite.fromFrame("cars_fire.png");
             this.carWind = PIXI.Sprite.fromFrame("cars_wind.png");
 
