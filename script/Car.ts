@@ -2,12 +2,12 @@ namespace Game {
 
     export class Car extends PIXI.Container {
 
-        private cars;
-        private carSmoke;
-        private carWind;
+        public cars;
+        public carSmoke;
+        public carWind;
 
-        private carsId: number;
-        private carsSpeed: number = 1;
+        public carsId: number;
+        public carsSpeed: number = 1;
 
         constructor() {
             super();
