@@ -45,8 +45,17 @@ namespace Game {
                 //sortArr.indexOf wont return the same index incase 
                 //cars have the same current distance 
             }
+        }
 
-
+        public update2(carsCurrDistanceObj) {
+            var sortable = [];
+            for (var param in carsCurrDistanceObj) {
+                sortable.push([carsCurrDistanceObj[param].xCoord, carsCurrDistanceObj[param].carNumber]);
+            }//store the object values for sorting
+            sortable.sort(function(a, b) {return a[0] - b[0]});
+            for (let x: number = 0; x < 10; x++) {
+                this.arrCarsSprite[sortable[x][1]].x = this.arrLabel[x].x;
+            }
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Game {
         private allCarsPositioned: boolean = false;
         private tilingSprite: PIXI.extras.TilingSprite;
         private animationDone: boolean = false;
+        private carObject = [];
         constructor() {
             super();
             this.initialize();
@@ -46,6 +47,7 @@ namespace Game {
                 this.addChild(cars);
                 this.carsArr.push(cars);
                 this.carsCurrDistance.push(cars.x);
+                this.carObject[i] = { xCoord: cars.x, carNumber: i }
             }
             this.standings = new Standings();
             this.standings.y = 150
@@ -60,36 +62,34 @@ namespace Game {
             this.carsCountStopped = 0;
             this.carsCountFinish = 0;
 
-            for (let carCount = 0; carCount <= 10; carCount++) {
-                if (carCount < 10) {
-                    this.moveCar(carCount);
-                    if (this.carsArr[carCount].x < -250 && this.carsCountFinish < 10) {
-                        this.carsCountFinish++;
-                        if (this.carsCountFinish == 10)//set this.animationDone to true if all cars crossed the line
-                            this.animationDone = true;
-                    }
-                    if (this.allCarsPositioned == false) {//keeps checking if all cars are in position
-                        if (this.carsCountStopped == 9) {
-                            this.allCarsPositioned = true;
-                        }
-                        if (this.carsArr[carCount].carSpeed == 0)
-                            this.carsCountStopped++;
-                    } else
-                        this.carsArr[carCount].toFinish = true;
-
+            for (let carCount = 0; carCount <= 9; carCount++) {
+                this.moveCar(carCount);
+                if (this.carsArr[carCount].x < -250 && this.carsCountFinish < 10) {
+                    this.carsCountFinish++;
+                    if (this.carsCountFinish == 10)//set this.animationDone to true if all cars crossed the line
+                        this.animationDone = true;
                 }
-                else
-                    this.standings.update(this.carsCurrDistance);//pass the array of cars' 'x-coordinate' to update the standings
+                if (this.allCarsPositioned == false) {//keeps checking if all cars are in position
+                    if (this.carsCountStopped == 9) {
+                        this.allCarsPositioned = true;
+                    }
+                    if (this.carsArr[carCount].carSpeed == 0)
+                        this.carsCountStopped++;
+                } else
+                    this.carsArr[carCount].toFinish = true;
             }
+            //this.standings.update(this.carsCurrDistance);//pass the array of cars' 'x-coordinate' to update the standings
+            //pass the array of cars' 'x-coordinate' to update the standings
+            this.standings.update2(this.carObject);
             this.countMove++;
             this.tilingSprite.tilePosition.x += 20;
         }
-        
+
         private moveCar(carNum) {
             this.carsArr[carNum].update(this.countMove);
             this.carsArr[carNum].x = this.carsArr[carNum].x + this.carsArr[carNum].carSpeed;
             this.carsCurrDistance[carNum] = this.carsArr[carNum].x;//store the car's current 'x-coordinate' inside the array
-
+            this.carObject[carNum].xCoord = this.carsArr[carNum].x;
         }
     }
 }

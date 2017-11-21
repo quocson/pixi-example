@@ -21,7 +21,7 @@ namespace Game {
 
             LadderGame = this;
             let bootLoader = new PIXI.loaders.Loader();
-            bootLoader.add("logo", "asset/img/loading.jpg").once("complete", (loader) => {
+            bootLoader.add("logo", "asset/img/loading.png").once("complete", (loader) => {
                 this.loadingTexture = loader.resources["logo"].texture.baseTexture;
                 this.loading = new PIXI.Sprite(this.getTextureByProgress());
                 this.loading.anchor.set(0.5, 0);
