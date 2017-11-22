@@ -2,12 +2,10 @@ namespace Game {
 
     export class Car extends PIXI.Container {
 
-        public cars;
-        public carSmoke;
-        public carWind;
-
-        public carsId: number;
+        public cars; carSmoke; carWind;
+        public isFinish: boolean = false;
         public carsSpeed: number = 1;
+        public carFinalDistance: number = 0;
 
         constructor() {
             super();
@@ -15,7 +13,6 @@ namespace Game {
 
         public initCars(addCar: number) {
             this.cars = PIXI.Sprite.fromFrame("cars_" + (addCar + 1) + ".png");
-            this.carsId = addCar + 1;
             this.carSmoke = PIXI.Sprite.fromFrame("cars_fire.png");
             this.carWind = PIXI.Sprite.fromFrame("cars_wind.png");
 

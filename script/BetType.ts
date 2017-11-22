@@ -20,6 +20,14 @@ namespace Game {
                         fontSize: 35,
                         fontStyle: 'normal',
                         fontWeight: 'bold',
+                        fill: ['#a80101'],
+                });
+
+                public style_1 = new PIXI.TextStyle({
+                        fontFamily: 'Roboto',
+                        fontSize: 35,
+                        fontStyle: 'normal',
+                        fontWeight: 'bold',
                         fill: ['#ffffff'],
                 });
 
@@ -38,8 +46,8 @@ namespace Game {
 
                 public showStatus() {
                         for (let i = 0; i < 3; i++) {
-                                let labelResult: PIXI.Text = new PIXI.Text(this.result[i], this.style);
-                                labelResult.x = labelResult.x = -260 + (80 * i);
+                                let labelResult: PIXI.Text = new PIXI.Text(this.result[i], this.style_1);
+                                labelResult.x = labelResult.x = -270 + (80 * i);
                                 labelResult.y = 500;
 
                                 this.resultTexts.push(labelResult);
@@ -47,7 +55,7 @@ namespace Game {
                         }
 
                         for (let i = 0; i < 5; i++) {
-                                let labelResult_dt: PIXI.Text = new PIXI.Text(this.result_dt[i], this.style);
+                                let labelResult_dt: PIXI.Text = new PIXI.Text(this.result_dt[i], this.style_1);
                                 labelResult_dt.x = labelResult_dt.x = 370 + (80 * i);
                                 labelResult_dt.y = 500;
 
