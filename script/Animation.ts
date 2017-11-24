@@ -1,6 +1,6 @@
 namespace Game {
 
-    export class AnimationGame extends PIXI.Container {
+    export class Animation extends PIXI.Container {
 
         private roadback; roadAnim; carsAnim;
 
@@ -101,10 +101,10 @@ namespace Game {
 
             if (this.carFinish == 10) return;
 
-            this.result();
+            this.updateResult();
         }
 
-        private result() {
+        private updateResult() {
             if (this.realTimeCar.length == 10 && this.carFinish < 3)
                 this.betType.sumNum = this.realTimeCar[0] + this.realTimeCar[1] + this.realTimeCar[2];
 

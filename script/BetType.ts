@@ -20,7 +20,7 @@ namespace Game {
                         fontSize: 35,
                         fontStyle: 'normal',
                         fontWeight: 'bold',
-                        fill: ['#a80101'],
+                        fill: ['#ddd200'],
                 });
 
                 public style_1 = new PIXI.TextStyle({

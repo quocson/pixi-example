@@ -35,9 +35,11 @@
         "script/Common/Constants.ts",
         "script/Common/POTO.ts",
         "script/Common/Utils.ts",
-        "script/AnimationGame.ts",
+        "script/Animation.ts",
         "script/BetType.ts",
         "script/Car.ts",
-        "script/Game.ts"
+        "script/Game.ts",
+        "script/LimitButtons.ts",
+        "script/SelectLimitPopup.ts"
     ]
 }

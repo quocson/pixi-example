@@ -8,7 +8,7 @@ namespace Game {
 
         private loading: PIXI.Sprite;
         private loadingTexture: PIXI.BaseTexture;
-        private mainGame: AnimationGame;
+        private mainGame: Animation;
 
         constructor() {
             super({
@@ -38,7 +38,7 @@ namespace Game {
                 // Resource loading complete
                 this.stage.removeChild(this.loading);
 
-                this.mainGame = new AnimationGame();
+                this.mainGame = new Animation();
                 this.stage.addChild(this.mainGame);
                 this.ticker.add(this.update, this);
             });
